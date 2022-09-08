@@ -12,17 +12,22 @@
 The service itself handles teams and users in teams. You can browse/create teams, invite team members. The users are
 just UUID ids, so it holds no user info. The users are meant to be stored in another services.
 
-Some of the endpoints require JWT tokens. Those can be generated using the token-creator endpoint (see swagger UI). The
+Some endpoints require JWT tokens. Those can be generated using the token-creator endpoint (see swagger UI). The
 UUID for an existing user can be found using the team endpoints.
 
 The service uses an H2 internal DB locally, so it can be booted up easily. Postgres is used in "ci" (test env) profile.
+
+### Maven Structure
+This project uses Maven modules and builds two .jar files when parent is built:
+- api module: Contains OpenFeign models (see below for more info on OpenFeign) that can be used by other services. **Note**: These are translated into regular json/HTTP traffic when transmitted and not a requirement for other services calling us (optional use). 
+- service module: The actual app, that contains rest controllers, service, etc. This is package into a docker container and shipped to running env. 
 
 ## Useful URLS
 
 After starting the service, you can access these URLs to explore:
 
 - Swagger UI: http://localhost:8081/swagger-ui.html#/
-- h2 db access: http://localhost:8081/h2-console/login.do
+- h2 db access: http://localhost:8081/h2-console/login.do (You might have to change URL to `jdbc:h2:file:./testdb;DB_CLOSE_ON_EXIT=FALSE` in the UI on login)
 
 ## Technologies demonstrated
 
@@ -74,14 +79,14 @@ It can be used in several ways:
     3. Uses Springboot security and users to pass the user details to endpoints.
 - Springboot Controller: `eu.lindroos.taas.teams.service.service.controller`
     1. It handles the mapping to external models and users services to do business logic.
-    2. GenericExpcetionHandler (`eu.lindroos.taas.teams.service.service.controller.GenericExceptionHandler`) to handle
+    2. GenericExceptionHandler (`eu.lindroos.taas.teams.service.service.controller.GenericExceptionHandler`) to handle
        common exceptions thrown by endpoints in the project.
 - Services (business logic): `eu.lindroos.taas.teams.service.service.service`
     1. Nothing special, it holds all business logic.
 
 ### Lombok
 
-Lombok is a helper library designed for Java. It simplifies a lot of boilerplate code in Java. You can see these
+Lombok is a helper library designed for Java, which makes Java much more readable. It simplifies a lot of boilerplate code in Java. You can see these
 annotations around data models, response classes, etc.
 
 - Removes the need for getters and setter (commonly replaces by @Data annotation or @Getter / @Setter)
