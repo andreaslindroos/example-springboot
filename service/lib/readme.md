@@ -1,0 +1,1 @@
+This lib folder replaces the need for a repository like jfrog/nexus. IRL, we would use a repository to fetch this lib.
