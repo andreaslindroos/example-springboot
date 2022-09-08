@@ -1,8 +1,12 @@
 # Example Spring Boot project that uses various libraries
 
+This is a services that demonstrates some of my favorite tools used in combination with Spring boot.
+
+Some highlights of the tools used are listed in the end of the doc.
+
 ### Disclaimer
 
-- This is not the best design and design choices was made based on needs. I use it here to demonstrate certain tools and
+- The design choices were made based on old needs, so it is not 100% perfect when it comes to e.g. db design. I use it here mainly to demonstrate certain tools and
   how they work together.
 - The versions used for the tools version are a bit outdated, but the tools still exists in some form as newer versions.
 - Original code was written 2019
@@ -15,7 +19,7 @@ just UUID ids, so it holds no user info. The users are meant to be stored in ano
 Some endpoints require JWT tokens. Those can be generated using the token-creator endpoint (see swagger UI). The
 UUID for an existing user can be found using the team endpoints.
 
-The service uses an H2 internal DB locally, so it can be booted up easily. Postgres is used in "ci" (test env) profile.
+The service uses an H2 internal DB locally, so it should run out of the box without extra database etc. Postgres is used in "ci" (test env) profile.
 
 ### Maven Structure
 This project uses Maven modules and builds two .jar files when parent is built:
